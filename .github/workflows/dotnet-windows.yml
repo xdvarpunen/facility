@@ -1,4 +1,4 @@
-name: .NET single-file executable console application
+name: .NET single-file executable desktop application
 
 on:
   release:
@@ -15,9 +15,9 @@ jobs:
     runs-on: windows-latest
     
     env:
-      PROJECT_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp.csproj
-      ZIP_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/bin/Release/net6.0/win-x64/publish/GithubPipelineProducedConsoleApp.zip
-      EXE_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/bin/Release/net6.0/win-x64/publish/GithubPipelineProducedConsoleApp.exe
+      PROJECT_PATH: Facility/Facility/Facility.csproj
+      ZIP_PATH: Facility/Facility/bin/Release/net6.0/win-x64/publish/Facility.zip
+      EXE_PATH: Facility/Facility/bin/Release/net6.0/win-x64/publish/Facility.exe
 
     # Checkout project
     steps:
