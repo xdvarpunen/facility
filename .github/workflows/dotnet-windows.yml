@@ -38,7 +38,7 @@ jobs:
 
     # Publish project
     - name: Publish Project
-      run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained --framework net6.0-windows -p:PublishSingleFile=true --no-restore
+      run: dotnet publish ${{ env.PROJECT_PATH }} -r win-x64 -c Release
 
     # Create zip file
     - name: Create Zip File
