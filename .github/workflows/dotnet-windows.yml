@@ -16,8 +16,8 @@ jobs:
     
     env:
       PROJECT_PATH: Facility/Facility/Facility.csproj
-      ZIP_PATH: Facility/Facility/bin/Release/net6.0/win-x64/publish/Facility.zip
-      EXE_PATH: Facility/Facility/bin/Release/net6.0/win-x64/publish/Facility.exe
+      ZIP_PATH: Facility/Facility/bin/Release/net6.0-windows/win-x64/publish/Facility.zip
+      EXE_PATH: Facility/Facility/bin/Release/net6.0-windows/win-x64/publish/Facility.exe
 
     # Checkout project
     steps:
