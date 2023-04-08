@@ -1,1 +1,66 @@
-.
+name: .NET single-file executable console application
+
+on:
+  release:
+    types: [published]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: windows-latest
+    
+    env:
+      PROJECT_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp.csproj
+      ZIP_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/bin/Release/net6.0/win-x64/publish/GithubPipelineProducedConsoleApp.zip
+      EXE_PATH: GithubPipelineProducedConsoleApp/GithubPipelineProducedConsoleApp/bin/Release/net6.0/win-x64/publish/GithubPipelineProducedConsoleApp.exe
+
+    # Checkout project
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    # Restore project
+    - name: Restore Project
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+
+    # Publish project
+    - name: Publish Project
+      run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-restore
+
+    # Create zip file
+    - name: Create Zip File
+      uses: papeloto/action-zip@v1
+      with:
+        files: ${{ env.EXE_PATH }}
+        dest: ${{ env.ZIP_PATH }}
+
+    # Initialize Release
+    - name: Initialize Release
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ver-${{ github.sha }}
+        release_name: ${{ github.ref }}
+
+    # Create Release
+    - name: Create Release
+      uses: csexton/release-asset-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.ZIP_PATH }}
+        release-url: ${{ steps.create_release.outputs.upload_url }}
