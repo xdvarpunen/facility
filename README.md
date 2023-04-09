@@ -1,4 +1,4 @@
-# facility
+# Facility
 
 Facility is Windows desktop application shared as single-executable file.
 
